@@ -15,8 +15,8 @@ class UserActivity(models.Model):
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     action = models.CharField(max_length=20, choices=ACTION_CHOICES)
-    product = models.ForeignKey('Product', null=True, on_delete=models.SET_NULL)
-    training = models.ForeignKey(Training, null=True, on_delete=models.SET_NULL)
+    product = models.ForeignKey('product.Product', null=True, on_delete=models.SET_NULL)
+    training = models.ForeignKey('training.Training', null=True, on_delete=models.SET_NULL)
     timestamp = models.DateTimeField(auto_now_add=True)
     location = models.CharField(max_length=100, blank=True)
     duration = models.PositiveIntegerField(null=True)

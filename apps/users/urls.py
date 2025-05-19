@@ -12,5 +12,4 @@ router.register(r'friendships', FriendshipViewSet, basename='friendship')
 urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='user-profile'),
     path('', include(router.urls)),
-    path('admin/', admin.site.urls),
 ]

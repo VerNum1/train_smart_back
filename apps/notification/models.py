@@ -23,13 +23,13 @@ class Notification(models.Model):
     )
     message = models.TextField()
     related_training = models.ForeignKey(
-        'Training',
+        'training.Training',
         null=True,
         blank=True,
         on_delete=models.SET_NULL
     )
     related_product = models.ForeignKey(
-        'Product',
+        'product.Product',
         null=True,
         blank=True,
         on_delete=models.SET_NULL

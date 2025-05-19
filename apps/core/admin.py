@@ -21,7 +21,7 @@ class UserAdmin(DjangoUserAdmin):
 
 @admin.register(TrainerProfile)
 class TrainerProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'rating', 'sport_specialization')
+    list_display = ('user', 'rating', 'social_links')
     search_fields = ('user__username',)
 
 

@@ -2,31 +2,37 @@ from django.contrib.auth import get_user_model
 from django.core.validators import URLValidator
 from rest_framework import serializers
 
-from apps.training.serializers import TrainingSerializer
 from apps.users.models import Friendship, TrainerProfile
 
 User = get_user_model()
 
 
-class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
+class BaseUserSerializer(serializers.ModelSerializer):
+    """Базовый сериализатор без зависимостей от других приложений"""
     class Meta:
         model = User
-        fields = ["id", "username", "password", "role", "age", "goal",
-                  "sport_type", "location", "weight", "height", "avatar"]
+        fields = ["id", "username", "role", "age", "goal",
+                "sport_type", "location", "weight", "height", "avatar"]
+
+
+class UserSerializer(BaseUserSerializer):
+    """Расширенный сериализатор для создания пользователя"""
+    password = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    completed_trainings = TrainingSerializer(many=True, read_only=True)
+def get_training_serializer():
+    from apps.training.serializers import TrainingSerializer
+    return TrainingSerializer
 
+
+class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "role", "age", "goal", "sport_type",
-                  "completed_trainings", "location", "weight", "height", "avatar"]
+        fields = ["id", "username", "role", "age", "goal",
+                  "sport_type", "location", "weight", "height", "avatar"]
 
 
 class TrainerProfileSerializer(serializers.ModelSerializer):
@@ -57,7 +63,7 @@ class TrainerProfileSerializer(serializers.ModelSerializer):
 
 
 class UserShortSerializer(serializers.ModelSerializer):
-    """Упрощенный сериализатор для отображения пользователей в заявках"""
+    """Упрощенный сериализатор для списков"""
     class Meta:
         model = User
         fields = ["id", "username", "role"]

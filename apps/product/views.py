@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 import requests
 import json
 
-from config import settings
+from config.settings import settings
 from .models import Product
 from .serializers import ProductSerializer
 from ..user_activity.models import UserActivity
