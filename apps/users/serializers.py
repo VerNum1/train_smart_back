@@ -23,11 +23,6 @@ class UserSerializer(BaseUserSerializer):
         return User.objects.create_user(**validated_data)
 
 
-def get_training_serializer():
-    from apps.training.serializers import TrainingSerializer
-    return TrainingSerializer
-
-
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
